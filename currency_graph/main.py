@@ -39,7 +39,7 @@ def get_filtered_currency_data_for_plot():
         df = df.sort_index()
 
         today = date.today()
-        one_year_ago = today - timedelta(days=365)
+        one_year_ago = today - timedelta(days=60)
 
         df_filtered = df.loc[str(one_year_ago):str(today)]
         

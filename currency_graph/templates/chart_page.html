@@ -37,7 +37,10 @@
                     data: rates,
                     borderColor: 'rgb(75, 192, 192)',
                     tension: 0.1,
-                    fill: false
+                    fill: false,
+                    pointRadius: 5, // 데이터 점의 반지름 (클수록 커짐)
+                    pointHoverRadius: 7, // 마우스를 올렸을 때 점의 반지름
+                    pointBackgroundColor: 'rgb(75, 192, 192)'
                 }]
             },
             options: {
@@ -59,6 +62,22 @@
                             display: true,
                             text: 'Exchange Rate (KRW)'
                         }
+                    }
+                },
+                onHover: (event, activeElements) => {
+                    const canvas = event.native.target;
+
+                    if (activeElements.length > 0) {
+                        canvas.style.cursor = 'pointer';
+
+                        const pointIndex = activeElements[0].index;
+                        const hoveredDate = labels[pointIndex];
+                        const hoveredRate = rates[pointIndex];
+
+                        console.log(`Date: ${hoveredDate}, Rate: ${hoveredRate}`);
+
+                    } else {
+                        canvas.style.cursor = 'default';
                     }
                 }
             }
