@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USD - KRW 환율 정보</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 20px; background-color: #f4f7f6; color: #333; line-height: 1.6; }
+        .container { max-width: 500px; margin: 50px auto; padding: 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); background-color: #fff; text-align: center; }
+        h1 { color: #0056b3; margin-bottom: 25px; font-size: 2em; }
+        .rate-display { font-size: 2.5em; font-weight: bold; color: #28a745; margin-bottom: 20px; }
+        .rate-display span { font-size: 0.6em; color: #6c757d; display: block; margin-top: 5px; }
+        .info-bar { font-size: 0.95em; color: #666; margin-bottom: 15px; }
+        .note { margin-top: 30px; font-size: 0.85em; color: #888; }
+        .reload-button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        .reload-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>USD - KRW 실시간 환율</h1>
+        <div class="info-bar">
+            기준: <strong>1 {{ base_currency }}</strong> | 날짜: <strong>{{ date }}</strong>
+        </div>
+        <div class="rate-display">
+            {{ rate | round(4) }} {{ target_currency }}
+            <span> (KRW / USD)</span>
+        </div>
+        
+        <button class="reload-button" onclick="location.reload()">새로고침</button>
+
+        <p class="note">이 환율은 Frankfurter API를 통해 실시간으로 제공됩니다. 환율은 계속 변동될 수 있습니다.</p>
+    </div>
+</body>
+</html>

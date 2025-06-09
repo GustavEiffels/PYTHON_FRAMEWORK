@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USD to KRW Exchange Rate Chart</title>
+
+    <script src="/static/chart.umd.min.js"></script>
+    <script src="/static/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; align-items: center; height: 95vh; margin: 0; background-color: #f0f2f5; }
+        .chart-container { width: 80%; max-width: 1000px; padding: 20px; background-color: white; border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); }
+        h1 { text-align: center; color: #333; }
+    </style>
+</head>
+<body>
+    <div class="chart-container">
+        <h1>USD to KRW Exchange Rate History</h1>
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <script>
+        const serverData = {{ chart_data | tojson | safe }};
+
+        const labels = serverData.filtered_data.map(entry => entry.date);
+        const rates = serverData.filtered_data.map(entry => entry.currency);
+        const base = serverData.base;
+        const target = serverData.target;
+
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: `${base} to ${target} Exchange Rate`,
+                    data: rates,
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'month',
+                            tooltipFormat: 'yyyy-MM-dd'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Date'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Exchange Rate (KRW)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
